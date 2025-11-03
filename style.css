@@ -1,0 +1,492 @@
+/* คอมเมนต์: กำหนดค่าเริ่มต้นและใช้ฟอนต์ Kanit */
+
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: #fce4ec;
+    /* สีชมพูอ่อนน่ารัก */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    transition: background-color 0.5s;
+}
+
+
+/* ตั้งค่าให้หน้าทั้งหมดเริ่มต้นด้วยการซ่อน ยกเว้นหน้าที่เป็น .active */
+
+.page {
+    display: none;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.page.active {
+    display: block;
+}
+
+
+/* ######################## หน้าหลัก: Netflix-style Gallery ######################## */
+
+#main-gallery {
+    text-align: center;
+    padding-top: 50px;
+    background-color: #363636;
+    /* สีเทาเข้มแบบ Netflix */
+    color: white;
+}
+
+.gallery-grid {
+    display: grid;
+    /* 2 คอลัมน์สำหรับหน้าจอใหญ่ */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+#main-gallery {
+    background-color: #ffe8e8;
+    color: white;
+}
+
+body.love-theme {
+    /* ธีมหลักเป็นสีชมพูอ่อน/ขาว */
+    background-color: #ffe8e8;
+    color: #333;
+    /* ... (อื่นๆ เหมือนเดิม) ... */
+}
+
+.sub-page {
+    /* พื้นหลังหน้าย่อยให้ดูหวานขึ้น */
+    background: linear-gradient(135deg, #fffafa, #fff0f5);
+    color: #444;
+}
+
+.gallery-item {
+    background-color: #b48d8d;
+    /* พื้นหลังกล่อง */
+    /* ... (อื่นๆ) ... */
+    /* คอมเมนต์: Neon Glow สีชมพูอ่อนรอบกล่อง */
+    box-shadow: 0 0 5px #ffb3c1, 0 0 10px #ffb3c1;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.gallery-item:hover {
+    /* แสงสว่างจ้าขึ้นเมื่อชี้ */
+    box-shadow: 0 0 10px #ff8fa3, 0 0 25px #ff8fa3, 0 0 40px #ff8fa3;
+}
+
+.gallery-item:active {
+    /* แสงสว่างจ้าที่สุดเมื่อกด */
+    box-shadow: 0 0 15px #ff4a68, 0 0 30px #ff4a68, 0 0 50px #ff4a68;
+}
+
+.item-content h2 {
+    color: #ffb3c1;
+    /* สีข้อความหัวข้อ */
+    text-shadow: 0 0 5px #ffb3c1;
+    /* ให้ข้อความเรืองแสงด้วย */
+}
+
+
+/* ปรับให้เป็น 2 คอลัมน์บนจอเล็ก */
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* ปรับให้เป็น 1 คอลัมน์บนจอมือถือ */
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gallery-item {
+    background-color: #555;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(233, 230, 230, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+    /* กำหนดอัตราส่วนให้เป็นสี่เหลี่ยมผืนผ้าแบบ Netflix */
+    padding-bottom: 56.25%;
+    /* 16:9 aspect ratio */
+    height: 0;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+    /* เด้งขึ้นเมื่อชี้ */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+}
+
+.item-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* ข้อความอยู่ด้านล่าง */
+    padding: 20px;
+    background: linear-gradient(to top, rgba(67, 65, 65, 0.7) 0%, transparent 100%);
+}
+
+.item-content h2 {
+    margin: 0 0 5px 0;
+    font-size: 1.5em;
+    color: #ffb3c1;
+    /* สีชมพู */
+}
+
+.item-content p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #eee;
+}
+
+.coming-soon {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+body.love-theme {
+    /* ธีมหลักเป็นสีชมพูอ่อน/ขาว */
+    background-color: #ffe8e8;
+    color: #333;
+    /* ... (อื่นๆ เหมือนเดิม) ... */
+}
+
+.sub-page {
+    /* พื้นหลังหน้าย่อยให้ดูหวานขึ้น */
+    background: linear-gradient(135deg, #fffafa, #fff0f5);
+    color: #444;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #ff8fa3;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+    z-index: 10;
+    /* ให้ปุ่มอยู่บนสุด */
+}
+
+.back-btn:hover {
+    background-color: #ff4a68;
+}
+
+
+/* ######################## กล่องที่ 1: Love Box (Emoji) ######################## */
+
+#love-box {
+    text-align: center;
+    background: linear-gradient(135deg, #f0f0f0, #ffebee);
+    overflow: hidden;
+}
+
+.love-container {
+    padding: 100px 20px;
+}
+
+#send-love-btn {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    background-color: #ff69b4;
+    /* สีชมพูฮอต */
+    color: white;
+    border: 3px solid #ff69b4;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(249, 169, 233, 0.2);
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+#send-love-btn:active {
+    transform: scale(0.95);
+}
+
+
+/* อิโมจิที่ลอยขึ้นมา */
+
+.falling-emoji {
+    position: fixed;
+    font-size: 3em;
+    pointer-events: none;
+    /* ไม่ให้บังปุ่ม */
+    opacity: 0;
+    animation: fall-and-fade 5s linear forwards;
+}
+
+@keyframes fall-and-fade {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(360deg);
+        /* ลอยลงและหมุน */
+    }
+}
+
+
+/* ######################## กล่องที่ 2: Anniversary Counter ######################## */
+
+#anniversary-counter {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.real-time-counter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.time-unit {
+    background-color: #fff;
+    border: 2px solid #ffb3c1;
+    border-radius: 10px;
+    padding: 15px 25px;
+    min-width: 100px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    text-align: center;
+}
+
+.time-unit span {
+    display: block;
+    font-size: 2.5em;
+    color: #ff69b4;
+    line-height: 1.2;
+}
+
+.time-unit label {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 5px;
+    display: block;
+}
+
+.time-unit.small span {
+    font-size: 1.5em;
+    color: #4a4a4a;
+}
+
+
+/* ปรับให้เป็น 2-3 แถวบนจอมือถือ */
+
+@media (max-width: 600px) {
+    .time-unit {
+        flex: 1 1 40%;
+        /* 2 คอลัมน์ */
+        min-width: auto;
+        padding: 10px 15px;
+    }
+    .time-unit.small {
+        flex: 1 1 100%;
+        /* มิลลิวินาทีอยู่แถวล่างสุดเต็มจอ */
+    }
+}
+
+
+/* ######################## กล่องที่ 3: Birthday Countdown & Zodiac ######################## */
+
+#birthday-countdown {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.zodiac-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 50px;
+    padding: 50px;
+    background-color: #f7f3f3;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    /* คอมเมนต์: พื้นหลัง: มังกร (Capricorn) & ธนู (Sagittarius) */
+    /* **สำคัญ:** คุณต้องหารูปภาพพื้นหลังที่สื่อถึงราศีมาใส่ตรงนี้เอง (เช่น .jpg, .png) */
+    /* ตัวอย่าง (แทนที่ URL):
+    background-image: url('zodiac_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    */
+}
+
+.person-box {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+}
+
+.person-box.capricorn {
+    border-left: 5px solid #2980b9;
+    /* สีฟ้า/น้ำเงิน */
+}
+
+.person-box.sagittarius {
+    border-right: 5px solid #e74c3c;
+    /* สีแดง/ส้ม */
+}
+
+.love-symbol {
+    font-size: 3em;
+    color: #ff69b4;
+}
+
+.person-name {
+    font-size: 2em;
+    margin: 10px 0;
+    color: #34495e;
+}
+
+.person-dob {
+    font-size: 1.1em;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+.countdown-display {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ff69b4;
+}
+
+.countdown-display span {
+    display: inline-block;
+    min-width: 30px;
+}
+
+.zodiac-info {
+    font-size: 0.9em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+
+/* ######################## กล่องที่ 4: Polaroid Gallery (Scroll Effect) ######################## */
+
+#photo-gallery {
+    padding-bottom: 100px;
+    /* เพิ่มพื้นที่ให้ Scroll */
+}
+
+.polaroid-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.polaroid-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding: 50px 0;
+}
+
+.polaroid-item {
+    background-color: white;
+    padding: 10px 10px 25px 10px;
+    /* ขอบด้านล่างกว้างกว่า */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: rotate(calc(var(--rotation) * 1deg));
+    /* สุ่มหมุนเล็กน้อย */
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+    /* เริ่มต้นซ่อนไว้ */
+    /* ใช้ transform: translateY เพื่อให้ภาพเด้งขึ้นตามการ scroll */
+    transform: translateY(100px);
+    width: 250px;
+    /* ขนาดรูปโพลารอยด์ */
+}
+
+
+/* คอมเมนต์: กำหนดการหมุนสุ่ม (Random rotation) ให้แต่ละรูปผ่านตัวแปร CSS */
+
+.polaroid-grid figure:nth-child(1) {
+    --rotation: 2;
+}
+
+.polaroid-grid figure:nth-child(2) {
+    --rotation: -5;
+}
+
+.polaroid-grid figure:nth-child(3) {
+    --rotation: 8;
+}
+
+.polaroid-grid figure:nth-child(4) {
+    --rotation: -1;
+}
+
+.polaroid-grid figure:nth-child(5) {
+    --rotation: -10;
+}
+
+.polaroid-grid figure:nth-child(6) {
+    --rotation: 4;
+}
+
+.polaroid-grid figure:nth-child(7) {
+    --rotation: -7;
+}
+
+.polaroid-grid figure:nth-child(8) {
+    --rotation: 0;
+}
+
+.polaroid-grid figure:nth-child(9) {
+    --rotation: 6;
+}
+
+.polaroid-grid figure:nth-child(10) {
+    --rotation: -3;
+}
+
+.polaroid-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.polaroid-item figcaption {
+    text-align: center;
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+}
+
+
+/* **สำหรับ JavaScript เพื่อแสดงผลและทำ Animation** */
+
+.polaroid-item.visible {
+    opacity: 1;
+    transform: translateY(0) rotate(calc(var(--rotation) * 1deg));
+    /* เลื่อนขึ้นและหมุนตามค่าที่กำหนด */
+}
