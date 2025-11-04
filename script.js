@@ -1,49 +1,36 @@
 // คอมเมนต์: เมื่อเอกสาร HTML โหลดเสร็จเรียบร้อย ให้เริ่มต้นฟังก์ชันหลัก
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ######################## A. การจัดการ INTRO SCREEN ########################
+    // ######################## A. การจัดการ INTRO SCREEN (ส่วนเดิม) ########################
     const introScreen = document.getElementById('intro-screen');
     const startButton = document.getElementById('start-btn');
     const mainGallery = document.getElementById('main-gallery');
 
-    // คอมเมนต์: ตั้งค่าเริ่มต้นให้ Intro Screen เป็นหน้า Active 
-    // และเมื่อกดปุ่ม Start ให้เปลี่ยนไปหน้า Gallery
     if (startButton) {
         startButton.addEventListener('click', () => {
-            // ซ่อน Intro Screen
             introScreen.classList.remove('active');
-            // แสดงหน้า Main Gallery
             mainGallery.classList.add('active');
         });
     }
 
-    // ######################## 1. การสลับหน้า (Page Navigation) ########################
-
-    // คอมเมนต์: ดึงปุ่มทั้งหมดที่ใช้ในการเปลี่ยนหน้า (Gallery Items และ Back Buttons)
+    // ######################## 1. การสลับหน้า (Page Navigation) (ส่วนเดิม) ########################
     const navButtons = document.querySelectorAll('.gallery-item, .back-btn');
-    // NOTE: ตอนนี้ต้องรวม intro-screen เข้าไปด้วย แต่เราจะซ่อนมันด้วยปุ่ม start-btn
     const allPages = document.querySelectorAll('.page');
 
-    // คอมเมนต์: ฟังก์ชันสลับหน้า
     function navigateTo(targetId) {
         allPages.forEach(page => {
-            // ซ่อนหน้าทั้งหมด
             page.classList.remove('active');
         });
-        // แสดงหน้าเป้าหมาย
         const targetPage = document.getElementById(targetId);
         if (targetPage) {
             targetPage.classList.add('active');
-            // คอมเมนต์: เมื่อสลับไปหน้า Photo Gallery ให้เรียกฟังก์ชันเริ่ม Scroll Animation
             if (targetId === 'photo-gallery') {
                 initScrollAnimation();
             }
         }
     }
 
-    // คอมเมนต์: เพิ่ม Event Listener ให้กับปุ่มทั้งหมด
     navButtons.forEach(button => {
-        // ตรวจสอบว่าไม่ใช่กล่อง Coming Soon ที่คลิกไม่ได้
         if (!button.classList.contains('coming-soon')) {
             button.addEventListener('click', () => {
                 const targetId = button.getAttribute('data-target');
@@ -54,33 +41,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ######################## B. โค้ดฟังก์ชันอื่น ๆ (เหมือนเดิม) ########################
+    // ######################## B. โค้ดฟังก์ชันอื่น ๆ ########################
 
-    // **ส่วนที่ 2: Love Box (สุ่มอิโมจิ)**
+    // **ส่วนที่ 2: Love Box (สุ่มอิโมจิและรูปภาพ) + Kiss Animation**
     const sendLoveBtn = document.getElementById('send-love-btn');
     const loveBox = document.getElementById('love-box');
-    const loveEmojis = ['💖', '❤️', '💕', '🥰', '😘', '😍', '💘', '💜', '🧡', '💛'];
+    const kissAnimation = document.getElementById('kiss-animation'); // Element อนิเมชันจุ๊บ
 
-    function spawnEmoji() {
-        // ... (โค้ดเดิม) ...
-        const emoji = loveEmojis[Math.floor(Math.random() * loveEmojis.length)];
-        const emojiElement = document.createElement('span');
-        emojiElement.classList.add('falling-emoji');
-        emojiElement.textContent = emoji;
+    // NEW: Array สำหรับเก็บ path ของไฟล์ GIF อนิเมชันจุ๊บ
+    const kissAnimations = [
+        'images/I Love You H.gif', // Path ไปยัง GIF ตัวแรก
+        // Path ไปยัง GIF ตัวที่สอง
+    ];
+
+    // รวมอิโมจิและ URL รูปภาพใน Array เดียวกัน
+    const loveItems = [
+        '💖', '❤️', '💕', '🥰', '😘', '😍', '💘', '💜', '🧡', '💛', // อิโมจิเดิม
+        // 'images/heart.png',     // ถ้าต้องการเพิ่มรูปภาพเล็กๆ ที่ลอยมาด้วย ให้ใส่ที่นี่
+        // 'https://example.com/some_love_icon.png', 
+    ];
+
+    function spawnLoveItem() {
+        const item = loveItems[Math.floor(Math.random() * loveItems.length)];
+        const isImage = item.startsWith('http') || item.includes('/');
+
+        const element = document.createElement(isImage ? 'img' : 'span');
 
         const size = Math.random() * 2 + 1;
         const startX = Math.random() * 100;
         const duration = Math.random() * 3 + 4;
 
-        emojiElement.style.fontSize = `${size}em`;
-        emojiElement.style.left = `${startX}vw`;
-        emojiElement.style.top = `-50px`;
-        emojiElement.style.animationDuration = `${duration}s`;
+        if (isImage) {
+            element.classList.add('falling-image');
+            element.src = item;
+            element.alt = "Love Item";
+            element.style.width = `${Math.random() * 40 + 40}px`;
+            element.style.height = 'auto';
+        } else {
+            element.classList.add('falling-emoji');
+            element.textContent = item;
+            element.style.fontSize = `${size}em`;
+        }
 
-        loveBox.appendChild(emojiElement);
+        element.style.left = `${startX}vw`;
+        element.style.top = `-50px`;
+        element.style.animationDuration = `${duration}s`;
+
+        loveBox.appendChild(element);
 
         setTimeout(() => {
-            emojiElement.remove();
+            element.remove();
         }, duration * 1000);
     }
 
@@ -88,12 +98,40 @@ document.addEventListener('DOMContentLoaded', () => {
         sendLoveBtn.addEventListener('click', () => {
             const count = Math.floor(Math.random() * 50) + 50;
             for (let i = 0; i < count; i++) {
-                setTimeout(spawnEmoji, i * 20);
+                setTimeout(spawnLoveItem, i * 20);
+            }
+
+            // **Logic แสดงอนิเมชันจุ๊บแบบจาง ๆ**
+            if (kissAnimation) {
+                // 1. สุ่มเลือก GIF
+                const randomKissGif = kissAnimations[Math.floor(Math.random() * kissAnimations.length)];
+
+                // 2. NEW: กำหนด background-image และเพิ่ม Cache Buster (Date.now())
+                //    การเพิ่ม '?v=' + Date.now() จะบังคับให้บราวเซอร์โหลด GIF ใหม่ทุกครั้ง
+                //    ซึ่งเป็นการรีเซ็ตการเล่น GIF ด้วย
+                kissAnimation.style.backgroundImage = `url('${randomKissGif}?v=${Date.now()}')`;
+
+                clearTimeout(kissAnimation.timeoutId);
+
+                // 3. แสดงผลทันที
+                kissAnimation.classList.add('show');
+
+                // 4. ซ่อนอนิเมชันหลังจากผ่านไป 1.5 วินาที
+                kissAnimation.timeoutId = setTimeout(() => {
+                    kissAnimation.classList.remove('show');
+
+                    // 5. NEW: รอให้ Transition หายไปแล้วค่อยเคลียร์ background-image 
+                    //    เพื่อไม่ให้ GIF ยังคงเล่นอยู่ในหน่วยความจำหลังจากหายไปแล้ว
+                    setTimeout(() => {
+                        kissAnimation.style.backgroundImage = 'none';
+                    }, 600);
+                }, 1500);
             }
         });
     }
 
-    // **ส่วนที่ 3: Anniversary Counter (Real-time)**
+
+    // **ส่วนที่ 3: Anniversary Counter (Real-time นับเวลาที่คบกัน - เหมือนเดิม)**
     const anniversaryDateString = "May 31, 2025 00:00:00 GMT+0700";
     const anniversaryStart = new Date(anniversaryDateString).getTime();
 
@@ -142,12 +180,120 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (document.getElementById('anniversary-counter')) {
-        setInterval(updateAnniversaryCounter, 10);
+    // **ส่วนที่ 4: Custom Anniversary Elapsed Time (นับเวลาที่ผ่านไปจากวันที่กำหนด)**
+    const anniversaryDateInput = document.getElementById('anniversary-date-input');
+    const setAnniversaryBtn = document.getElementById('set-anniversary-btn');
+    const clearAnniversaryBtn = document.getElementById('clear-anniversary-btn');
+    const anniversarySetInfo = document.getElementById('anniversary-set-info');
+    const customAnniversaryDateDisplay = document.getElementById('custom-anniversary-date-display');
+
+    const STORAGE_KEY_CUSTOM_START = 'customStartTime';
+
+    function saveAnniversaryDate(dateString) {
+        localStorage.setItem(STORAGE_KEY_CUSTOM_START, dateString);
+        displayAnniversaryDate(dateString);
+        updateCustomAnniversaryElapsed();
     }
 
+    function loadAnniversaryDate() {
+        return localStorage.getItem(STORAGE_KEY_CUSTOM_START);
+    }
 
-    // **ส่วนที่ 4: Birthday Countdown**
+    function displayAnniversaryDate(dateString) {
+        if (dateString) {
+            const date = new Date(dateString + 'T00:00:00');
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            customAnniversaryDateDisplay.textContent = `กำลังนับตั้งแต่: ${date.toLocaleDateString('th-TH', options)}`;
+            clearAnniversaryBtn.style.display = 'inline-block';
+            anniversarySetInfo.textContent = 'เวลาที่ผ่านไปแล้ว...';
+        } else {
+            customAnniversaryDateDisplay.textContent = 'ยังไม่ได้ตั้งวันที่เริ่มต้น';
+            clearAnniversaryBtn.style.display = 'none';
+            anniversarySetInfo.textContent = 'โปรดตั้งค่าวันที่เริ่มต้นเพื่อเริ่มนับเวลาไปข้างหน้า';
+
+            const pad = (num, len = 2) => String(num).padStart(len, '0');
+            const elementsToClear = ['custom-years', 'custom-months', 'custom-days', 'custom-hours', 'custom-minutes', 'custom-seconds'];
+            elementsToClear.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = pad(0);
+            });
+        }
+    }
+
+    function clearAnniversary() {
+        localStorage.removeItem(STORAGE_KEY_CUSTOM_START);
+        displayAnniversaryDate(null);
+    }
+
+    function updateCustomAnniversaryElapsed() {
+        const startDateString = loadAnniversaryDate();
+        if (!startDateString) {
+            return;
+        }
+
+        const startTime = new Date(startDateString + 'T00:00:00').getTime();
+        const now = new Date().getTime();
+        const distance = now - startTime;
+
+        if (distance < 0) {
+            anniversarySetInfo.textContent = 'วันที่เริ่มต้นยังไม่มาถึง!';
+            return;
+        }
+
+        const pad = (num, len = 2) => String(num).padStart(len, '0');
+
+        let start = new Date(startTime);
+        let current = new Date(now);
+
+        let years = current.getFullYear() - start.getFullYear();
+        let months = current.getMonth() - start.getMonth();
+        let days = current.getDate() - start.getDate();
+
+        if (days < 0) {
+            months--;
+            const daysInLastMonth = new Date(current.getFullYear(), current.getMonth(), 0).getDate();
+            days += daysInLastMonth;
+        }
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        const msPerSecond = 1000;
+        const msPerMinute = msPerSecond * 60;
+        const msPerHour = msPerMinute * 60;
+        const msPerDay = msPerHour * 24;
+
+        const timeInDay = now - new Date(current.getFullYear(), current.getMonth(), current.getDate()).getTime();
+
+        const hours = Math.floor((timeInDay % msPerDay) / msPerHour);
+        const minutes = Math.floor((timeInDay % msPerHour) / msPerMinute);
+        const seconds = Math.floor((timeInDay % msPerMinute) / msPerSecond);
+
+        document.getElementById('custom-years').textContent = pad(years);
+        document.getElementById('custom-months').textContent = pad(months);
+        document.getElementById('custom-days').textContent = pad(days);
+        document.getElementById('custom-hours').textContent = pad(hours);
+        document.getElementById('custom-minutes').textContent = pad(minutes);
+        document.getElementById('custom-seconds').textContent = pad(seconds);
+    }
+
+    if (setAnniversaryBtn) {
+        setAnniversaryBtn.addEventListener('click', () => {
+            const dateValue = anniversaryDateInput.value;
+            if (dateValue) {
+                saveAnniversaryDate(dateValue);
+            } else {
+                alert('กรุณาเลือกวันที่!');
+            }
+        });
+    }
+
+    if (clearAnniversaryBtn) {
+        clearAnniversaryBtn.addEventListener('click', clearAnniversary);
+    }
+
+    // **ส่วนที่ 5: Birthday Countdown (ส่วนเดิม)**
     const birthdays = [
         { name: "Peach", dob: "01/22/2008", id: "peach-countdown" },
         { name: "Toon", dob: "01/05/2006", id: "toon-countdown" }
@@ -182,12 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (document.getElementById('birthday-countdown')) {
-        updateBirthdayCountdown();
-        setInterval(updateBirthdayCountdown, 1000);
-    }
-
-    // **ส่วนที่ 5: Scroll Reveal**
+    // **ส่วนที่ 6: Scroll Reveal (ส่วนเดิม)**
     const polaroidItems = document.querySelectorAll('.polaroid-item');
 
     function initScrollAnimation() {
@@ -211,7 +352,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // คอมเมนต์: ตรวจสอบว่าหน้าแรกไม่ใช่ Intro screen ก่อน
+    // คอมเมนต์: การเรียกใช้ฟังก์ชันเริ่มต้นทั้งหมด
+    if (document.getElementById('anniversary-counter')) {
+        setInterval(updateAnniversaryCounter, 10);
+
+        const storedDate = loadAnniversaryDate();
+        if (storedDate) {
+            anniversaryDateInput.value = storedDate;
+        }
+        displayAnniversaryDate(storedDate);
+        setInterval(updateCustomAnniversaryElapsed, 1000);
+    }
+
+    if (document.getElementById('birthday-countdown')) {
+        updateBirthdayCountdown();
+        setInterval(updateBirthdayCountdown, 1000);
+    }
+
     if (mainGallery.classList.contains('active') && document.getElementById('photo-gallery').classList.contains('active')) {
         initScrollAnimation();
     }
