@@ -103,6 +103,38 @@
                     <label>มิลลิวินาที</label>
                 </div>
             </div>
+
+            <div id="next-anniversary-section" class="anniversary-section">
+                <h2>🎉 วันครบรอบพิเศษของเรา</h2>
+                <div id="anniversary-countdown-display" class="countdown-display">
+                    <p>เหลือเวลาอีก:</p>
+                    <div class="time-unit">
+                        <span id="anni-days">00</span>
+                        <label>วัน</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="anni-hours">00</span>
+                        <label>ชม.</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="anni-minutes">00</span>
+                        <label>นาที</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="anni-seconds">00</span>
+                        <label>วินาที</label>
+                    </div>
+                </div>
+
+                <div id="anniversary-input-form">
+                    <p>ตั้งวันครบรอบถัดไป:</p>
+                    <input type="date" id="anniversary-date-input" required>
+                    <button id="set-anniversary-btn">ตั้งค่า</button>
+                    <button id="clear-anniversary-btn" style="display:none;">ล้างค่า</button>
+                </div>
+
+                <p id="anniversary-set-info" style="margin-top: 10px;"></p>
+            </div>
         </div>
     </div>
 
