@@ -63,7 +63,8 @@
         <div class="love-container">
             <h1>ส่งความรักให้กัน!</h1>
             <button id="send-love-btn">บอกรัก & คิดถึง! 🥰</button>
-            <div id="emoji-display">
+            <div id="emoji-display"> 
+                <div id="kiss-animation"></div>
             </div>
         </div>
     </div>
@@ -105,31 +106,40 @@
             </div>
 
             <div id="next-anniversary-section" class="anniversary-section">
-                <h2>🎉 วันครบรอบพิเศษของเรา</h2>
-                <div id="anniversary-countdown-display" class="countdown-display">
-                    <p>เหลือเวลาอีก:</p>
-                    <div class="time-unit">
-                        <span id="anni-days">00</span>
+                <h2>💖 นับเวลาจากวันที่กำหนดเอง</h2>
+                <p id="custom-anniversary-date-display" class="medium-date-display">ยังไม่ได้ตั้งวันที่เริ่มต้น</p>
+
+                <div id="custom-time-elapsed-display" class="real-time-counter small-counter-grid">
+                    <div class="time-unit small-unit">
+                        <span id="custom-years">00</span>
+                        <label>ปี</label>
+                    </div>
+                    <div class="time-unit small-unit">
+                        <span id="custom-months">00</span>
+                        <label>เดือน</label>
+                    </div>
+                    <div class="time-unit small-unit">
+                        <span id="custom-days">00</span>
                         <label>วัน</label>
                     </div>
-                    <div class="time-unit">
-                        <span id="anni-hours">00</span>
+                    <div class="time-unit small-unit">
+                        <span id="custom-hours">00</span>
                         <label>ชม.</label>
                     </div>
-                    <div class="time-unit">
-                        <span id="anni-minutes">00</span>
+                    <div class="time-unit small-unit">
+                        <span id="custom-minutes">00</span>
                         <label>นาที</label>
                     </div>
-                    <div class="time-unit">
-                        <span id="anni-seconds">00</span>
+                    <div class="time-unit small-unit">
+                        <span id="custom-seconds">00</span>
                         <label>วินาที</label>
                     </div>
                 </div>
 
                 <div id="anniversary-input-form">
-                    <p>ตั้งวันครบรอบถัดไป:</p>
+                    <p>ตั้งวันที่เริ่มต้นการนับ (วัน/เดือน/ปี):</p>
                     <input type="date" id="anniversary-date-input" required>
-                    <button id="set-anniversary-btn">ตั้งค่า</button>
+                    <button id="set-anniversary-btn">เริ่มนับ!</button>
                     <button id="clear-anniversary-btn" style="display:none;">ล้างค่า</button>
                 </div>
 
@@ -137,6 +147,7 @@
             </div>
         </div>
     </div>
+
 
     <div id="birthday-countdown" class="page sub-page">
         <button class="back-btn" data-target="main-gallery">← Back to Home</button>
@@ -211,6 +222,10 @@
                 <figure class="polaroid-item">
                     <img src="F40157FD-ADAA-46F9-A2FE-9C305C27A61E.JPG" alt="">
                     <figcaption>11/07/2025</figcaption>
+                </figure>
+                <figure class="polaroid-item">
+                    <img src="I Love You H.gif" alt="">
+                    <figcaption></figcaption>
                 </figure>
             </div>
         </div>
