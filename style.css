@@ -114,7 +114,7 @@ body.love-theme {
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(233, 230, 230, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s, box-shadow 0.3s;
     /* กำหนดอัตราส่วนให้เป็นสี่เหลี่ยมผืนผ้าแบบ Netflix */
     padding-bottom: 56.25%;
@@ -248,6 +248,82 @@ body.love-theme {
 }
 
 
+/* ... (โค้ด CSS เดิมของคุณ) ... */
+
+
+/* ######################## กล่องที่ 1: Love Box (รูปภาพที่ลอยขึ้นมา) ######################## */
+
+
+/* สไตล์สำหรับรูปภาพที่ลอยขึ้นมา (img tag) */
+
+.falling-image {
+    position: fixed;
+    pointer-events: none;
+    /* ไม่ให้บังปุ่ม */
+    opacity: 0;
+    animation: fall-and-fade 5s linear forwards;
+    /* ขนาดถูกกำหนดโดย JS แต่เรากำหนดค่าเริ่มต้นเพื่อความชัวร์ */
+    width: 60px;
+    height: auto;
+    object-fit: contain;
+}
+
+
+/* @keyframes fall-and-fade ควรมีอยู่แล้วในโค้ดเดิมของคุณ */
+
+
+/* ... (โค้ด CSS เดิมของคุณ) ... */
+
+
+/* ... (โค้ด CSS เดิมของคุณ) ... */
+
+
+/* สไตล์สำหรับอนิเมชันจุ๊บกลางหน้าจอ */
+
+
+/* ... (โค้ด CSS เดิมของคุณ) ... */
+
+
+/* สไตล์สำหรับอนิเมชันจุ๊บกลางหน้าจอ (ตอนนี้เป็น div) */
+
+#kiss-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 250px;
+    /* NEW: ปรับขนาดให้ใหญ่ขึ้นเพื่อให้ GIF ดูดี */
+    height: 250px;
+    /* NEW: กำหนดความสูงเท่ากันเพื่อเป็นสี่เหลี่ยมจัตุรัส */
+    background-size: contain;
+    /* NEW: ให้รูปภาพพอดีกับขนาด div */
+    background-repeat: no-repeat;
+    /* NEW: ไม่ต้องวนซ้ำ */
+    background-position: center;
+    /* NEW: จัดกึ่งกลางรูปภาพ */
+    opacity: 0;
+    /* ซ่อนไว้ตอนเริ่มต้น */
+    pointer-events: none;
+    z-index: 99;
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
+    filter: blur(10px);
+}
+
+
+/* Class สำหรับแสดงอนิเมชัน: ปรับ Opacity และเอา Blur ออก */
+
+#kiss-animation.show {
+    opacity: 0.7;
+    /* ลดความทึบให้เหลือ 70% (จางลง) */
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0px);
+    /* เอาความเบลอออกเมื่อแสดงผล */
+}
+
+
+/* ... (โค้ด CSS เดิมของคุณ) ... */
+
+
 /* ######################## กล่องที่ 2: Anniversary Counter ######################## */
 
 #anniversary-counter {
@@ -308,6 +384,102 @@ body.love-theme {
         /* มิลลิวินาทีอยู่แถวล่างสุดเต็มจอ */
     }
 }
+
+
+/* **NEW STYLES FOR CUSTOM ANNIVERSARY SECTION** */
+
+
+/* ... (โค้ด CSS ส่วนบนเหมือนเดิม) ... */
+
+
+/* **NEW STYLES FOR CUSTOM ANNIVERSARY SECTION** */
+
+.anniversary-section {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #ffe0e6;
+    /* Light pink background */
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+}
+
+.anniversary-section h2 {
+    color: #e91e63;
+    /* Deeper pink for heading */
+}
+
+.medium-date-display {
+    font-size: 1.5em;
+    /* Medium size */
+    font-weight: 700;
+    color: #ff4a68;
+    /* Bright pink color */
+    margin-top: 15px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+
+/* ปรับให้ตัวนับที่สองเล็กลง */
+
+.small-counter-grid .time-unit {
+    padding: 10px 10px;
+    min-width: 80px;
+}
+
+.small-counter-grid .time-unit span {
+    font-size: 1.5em;
+    /* ตัวเลขเล็กลง */
+}
+
+.small-counter-grid .time-unit label {
+    font-size: 0.7em;
+    /* Label เล็กลง */
+}
+
+#anniversary-input-form {
+    margin-top: 20px;
+}
+
+#anniversary-input-form input[type="date"],
+#anniversary-input-form button {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ffb3c1;
+    font-family: 'Kanit', sans-serif;
+    font-size: 1em;
+}
+
+#set-anniversary-btn {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#set-anniversary-btn:hover {
+    background-color: #ff4a68;
+}
+
+#clear-anniversary-btn {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#clear-anniversary-btn:hover {
+    background-color: #aaa;
+}
+
+
+/* END NEW STYLES */
+
+
+/* ... (โค้ด CSS ส่วนล่างเหมือนเดิม) ... */
 
 
 /* ######################## กล่องที่ 3: Birthday Countdown & Zodiac ######################## */
